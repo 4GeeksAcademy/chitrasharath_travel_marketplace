@@ -26,23 +26,16 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [photoIndex, setPhotoIndex] = useState(0);
+  const [selectedNights, setSelectedNights] = useState(2);
   const trustItems = [{ title: "Self check-in", description: "Keypad access for smooth arrival." }, { title: "Great communication", description: "" }];
   useEffect(() => { const timer = setTimeout(() => setLoading(false), 700); return () => clearTimeout(timer); }, []);
   const listing = useMemo(() => listings.find((item) => item.id === id) ?? listings[0], [id]);
+  useEffect(() => setSelectedNights(listing.price.totalNights), [listing.id, listing.price.totalNights]);
   const host = hosts.find((item) => item.id === listing.hostId) ?? hosts[0];
   trustItems[1].description = `${host.responseRate} response rate and ${host.responseTime}.`;
   const listingAmenities = amenities.filter((item) => listing.amenityIds.includes(item.id));
   const nearby = listings.filter((item) => item.destinationSlug === listing.destinationSlug && item.id !== listing.id);
-  const locationPoints = [
-    { id: listing.id, label: listing.title, lat: listing.coordinates.lat, lng: listing.coordinates.lng, active: true },
-    ...nearby.slice(0, 3).map((item) => ({
-      id: item.id,
-      label: item.title,
-      lat: item.coordinates.lat,
-      lng: item.coordinates.lng,
-      active: false,
-    })),
-  ];
+  const locationPoints = [{ id: listing.id, label: listing.title, lat: listing.coordinates.lat, lng: listing.coordinates.lng, active: true }];
   const next = () => setPhotoIndex((index) => (index + 1) % listing.photos.length);
   const prev = () => setPhotoIndex((index) => (index - 1 + listing.photos.length) % listing.photos.length);
   const from = searchParams.get("from");
@@ -65,7 +58,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
           <DescriptionSection body={listing.summary} />
           <AmenitiesSection items={listingAmenities} />
           <LocationSection placeLabel={listing.locationLabel} points={locationPoints} />
-          <DateSelectionSection range={listing.availableDateRanges[0]} />
+          <DateSelectionSection range={listing.availableDateRanges[0]} onNightsChange={setSelectedNights} />
           <ReviewPlaceholderSection />
           <HostSection host={host} />
           <PolicySection />
@@ -73,7 +66,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
           <DestinationLinksSection title="Explore nearby neighborhoods" groups={inspirationGroups} />
           <FooterLinkGroups groups={footerLinkGroups} meta={footerMeta} />
         </div>
-        <BookingSummary listing={listing} />
+        <BookingSummary listing={listing} selectedNights={selectedNights} />
       </div>
     </main>
   );

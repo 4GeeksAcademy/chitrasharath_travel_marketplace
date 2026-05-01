@@ -13,18 +13,6 @@ export const homeSections: HomeSection[] = [
     ],
   },
   {
-    id: "featured-hotels-miami",
-    title: "Featured hotels in Miami",
-    subtitle: "A collection of independent and handpicked hotels",
-    destinationSlug: "miami",
-    listingIds: [
-      "listing-miami-2",
-      "listing-miami-1",
-      "listing-miami-3",
-      "listing-miami-4"
-    ],
-  },
-  {
     id: "stay-in-philadelphia",
     title: "Stay in Philadelphia",
     destinationSlug: "philadelphia",
