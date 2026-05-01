@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --canvas: #faf7f2;
+  --surface: #ffffff;
+  --surface-muted: #f3f1ed;
+  --border-soft: #e8e4de;
+  --text-primary: #1f1f1b;
+  --text-secondary: #6b6a66;
+  --text-muted: #908d87;
+  --accent-primary: #ff385c;
+  --accent-hover: #e31c5f;
+  --accent-soft: #fff1f4;
+  --map-water: #bfe5f2;
+  --success-soft: #eaf7ee;
+  --shadow-primary: 0 10px 30px rgba(31, 31, 27, 0.08);
+  --shadow-chip: 0 6px 18px rgba(31, 31, 27, 0.1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-plus-jakarta);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--canvas);
+  background-image:
+    radial-gradient(1200px 500px at 10% -5%, #fff8ea 0%, transparent 60%),
+    radial-gradient(900px 420px at 95% 0%, #ffeef1 0%, transparent 58%);
+  color: var(--text-primary);
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+a,
+button,
+input {
+  transition: all 200ms ease;
+}
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise-in {
+  animation: rise-in 220ms ease both;
 }

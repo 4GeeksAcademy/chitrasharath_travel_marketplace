@@ -1,0 +1,40 @@
+import type { Destination } from "@/types/destination";
+
+export const destinations: Destination[] = [
+  {
+    id: "dest-miami",
+    slug: "miami",
+    name: "Miami",
+    region: "Florida",
+    country: "United States",
+    shortDescription: "Popular homes and resort-style stays near the water.",
+    searchLabel: "Miami, Florida",
+    searchKeywords: ["miami", "florida", "beach", "pool", "resort"],
+    heroTitle: "Popular homes in Miami",
+    coordinates: { lat: 25.7617, lng: -80.1918 },
+  },
+  {
+    id: "dest-philadelphia",
+    slug: "philadelphia",
+    name: "Philadelphia",
+    region: "Pennsylvania",
+    country: "United States",
+    shortDescription: "Historic neighborhoods, guest suites, and apartment rentals.",
+    searchLabel: "Philadelphia, Pennsylvania",
+    searchKeywords: ["philadelphia", "pennsylvania", "historic", "city"],
+    heroTitle: "Stay in Philadelphia",
+    coordinates: { lat: 39.9526, lng: -75.1652 },
+  },
+  {
+    id: "dest-pittsburgh",
+    slug: "pittsburgh",
+    name: "Pittsburgh",
+    region: "Pennsylvania",
+    country: "United States",
+    shortDescription: "Studios, guest rooms, and city stays near downtown.",
+    searchLabel: "Pittsburgh, Pennsylvania",
+    searchKeywords: ["pittsburgh", "pennsylvania", "studio", "downtown"],
+    heroTitle: "Stays in Pittsburgh",
+    coordinates: { lat: 40.4406, lng: -79.9959 },
+  },
+];
