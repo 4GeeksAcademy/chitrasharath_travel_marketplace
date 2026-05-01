@@ -15,6 +15,22 @@ export const ListingCard = ({ listing, compact, source }: ListingCardProps) => {
       <Link href={href} className="block">
         <div className="relative overflow-hidden rounded-[22px] border border-[var(--border-soft)] shadow-[var(--shadow-primary)] md:transition md:duration-200 md:group-hover:-translate-y-0.5">
           <Image src={listing.photos[0].url} alt={listing.photos[0].alt} width={800} height={600} className="h-52 w-full object-cover transition duration-200 group-hover:scale-[1.03]" unoptimized />
+          {listing.badges.length ? (
+            <div className="absolute top-3 left-3 flex max-w-[75%] flex-wrap gap-1.5">
+              {listing.badges.slice(0, 2).map((badge) => (
+                <span
+                  key={badge.label}
+                  className={`rounded-full px-2 py-1 text-[10px] font-semibold leading-none ${
+                    badge.tone === "accent"
+                      ? "bg-[var(--accent-primary)] text-white"
+                      : "bg-white/90 text-[var(--text-primary)]"
+                  }`}
+                >
+                  {badge.label}
+                </span>
+              ))}
+            </div>
+          ) : null}
           <button type="button" className="absolute top-3 right-3 rounded-full bg-white/85 p-2">
             <span className="text-xs">♡</span>
           </button>

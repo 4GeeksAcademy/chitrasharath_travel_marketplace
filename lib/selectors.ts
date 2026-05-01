@@ -9,12 +9,23 @@ export const listingsForDestination = (slug?: string) =>
   slug ? listings.filter((listing) => listing.destinationSlug === slug) : listings;
 
 export const listingSections = () =>
-  homeSections.map((section) => ({
-    ...section,
-    items: section.listingIds
+  homeSections.map((section) => {
+    const items = section.listingIds
       .map((id) => listingById(id))
-      .filter((item): item is Listing => Boolean(item)),
-  }));
+      .filter((item): item is Listing => Boolean(item));
+
+    if (section.id === "featured-hotels-miami") {
+      items.sort((a, b) => {
+        if (b.rating !== a.rating) return b.rating - a.rating;
+        return b.reviewCount - a.reviewCount;
+      });
+    }
+
+    return {
+      ...section,
+      items,
+    };
+  });
 
 export const resolveDestinationSlug = (query: string) => {
   const normalized = query.trim().toLowerCase();

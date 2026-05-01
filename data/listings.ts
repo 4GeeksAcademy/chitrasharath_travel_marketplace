@@ -33,7 +33,10 @@ export const listings: Listing[] = [
         caption: "Living area detail"
       }
     ],
-    badges: [{ label: "Guest favorite", tone: "neutral" }],
+    badges: [
+      { label: "Guest favorite", tone: "neutral" },
+      { label: "Superhost", tone: "accent" }
+    ],
     hostId: "host-maya",
     amenityIds: ["wifi", "kitchen", "air-conditioning", "tv"],
     price: {
@@ -82,7 +85,7 @@ export const listings: Listing[] = [
         caption: "Courtyard lounge view"
       }
     ],
-    badges: [],
+    badges: [{ label: "Superhost", tone: "accent" }],
     hostId: "host-maya",
     amenityIds: ["wifi", "pool", "air-conditioning", "parking"],
     price: {
@@ -131,7 +134,10 @@ export const listings: Listing[] = [
         caption: "Suite secondary view"
       }
     ],
-    badges: [{ label: "Guest favorite", tone: "neutral" }],
+    badges: [
+      { label: "Guest favorite", tone: "neutral" },
+      { label: "Superhost", tone: "accent" }
+    ],
     hostId: "host-jordan",
     amenityIds: ["wifi", "workspace", "tv", "self-check-in"],
     price: {
@@ -180,7 +186,10 @@ export const listings: Listing[] = [
         caption: "Interior detail"
       }
     ],
-    badges: [{ label: "Guest favorite", tone: "neutral" }],
+    badges: [
+      { label: "Guest favorite", tone: "neutral" },
+      { label: "Superhost", tone: "accent" }
+    ],
     hostId: "host-jordan",
     amenityIds: ["wifi", "kitchen", "workspace", "air-conditioning"],
     price: {
@@ -343,5 +352,302 @@ export const listings: Listing[] = [
       { startDate: "2026-05-18", endDate: "2026-05-22" }
     ],
     coordinates: { lat: 40.4569, lng: -80.0113 }
+  },
+  {
+    id: "listing-miami-3",
+    slug: "coastal-condo-in-miami-beachfront-light",
+    destinationSlug: "miami",
+    title: "Coastal condo in Miami",
+    propertyType: "Entire condo",
+    locationLabel: "Miami Beach, Florida",
+    summary: "Coastal-toned condo with bright interiors and easy access to the beach boardwalk.",
+    searchKeywords: ["miami", "coastal", "condo", "beachfront", "bright"],
+    guestCount: 3,
+    bedroomCount: 1,
+    bedCount: 2,
+    bathCount: 1,
+    rating: 4.92,
+    reviewCount: 74,
+    isGuestFavorite: true,
+    isSuperhost: true,
+    isWishlistedDefault: false,
+    photos: [
+      {
+        id: "listing-miami-3-photo-1",
+        url: "/images/listings/miami-apartment-1b.jpg",
+        alt: "Bright Miami condo with lounge seating and natural light.",
+        caption: "Living area"
+      },
+      {
+        id: "listing-miami-3-photo-2",
+        url: "/images/listings/miami-apartment-2b.jpg",
+        alt: "Miami courtyard and pool-facing exterior from the condo.",
+        caption: "Courtyard view"
+      }
+    ],
+    badges: [
+      { label: "Guest favorite", tone: "neutral" },
+      { label: "Superhost", tone: "accent" }
+    ],
+    hostId: "host-maya",
+    amenityIds: ["wifi", "pool", "kitchen", "air-conditioning"],
+    price: {
+      nightlyRate: 141,
+      totalNights: 2,
+      cleaningFee: 25,
+      serviceFee: 21,
+      taxes: 11,
+      total: 339
+    },
+    availableDateRanges: [
+      { startDate: "2026-05-09", endDate: "2026-05-11" },
+      { startDate: "2026-05-24", endDate: "2026-05-27" }
+    ],
+    coordinates: { lat: 25.7814, lng: -80.1308 }
+  },
+  {
+    id: "listing-philadelphia-3",
+    slug: "loft-in-center-city-philadelphia",
+    destinationSlug: "philadelphia",
+    title: "Loft in Center City",
+    propertyType: "Entire loft",
+    locationLabel: "Philadelphia, Pennsylvania",
+    summary: "Warm loft with a focused workspace, modern finishes, and walkable dining nearby.",
+    searchKeywords: ["philadelphia", "center city", "loft", "workspace", "modern"],
+    guestCount: 2,
+    bedroomCount: 1,
+    bedCount: 1,
+    bathCount: 1,
+    rating: 4.89,
+    reviewCount: 67,
+    isGuestFavorite: true,
+    isSuperhost: false,
+    isWishlistedDefault: false,
+    photos: [
+      {
+        id: "listing-philadelphia-3-photo-1",
+        url: "/images/listings/philadelphia-apartment-2b.jpg",
+        alt: "Modern loft interior in Center City Philadelphia with warm lighting.",
+        caption: "Loft interior"
+      },
+      {
+        id: "listing-philadelphia-3-photo-2",
+        url: "/images/listings/philadelphia-suite-1b.jpg",
+        alt: "Secondary loft angle with desk and sleeping area.",
+        caption: "Workspace and sleeping area"
+      }
+    ],
+    badges: [{ label: "Guest favorite", tone: "neutral" }],
+    hostId: "host-jordan",
+    amenityIds: ["wifi", "workspace", "kitchen", "air-conditioning"],
+    price: {
+      nightlyRate: 132,
+      totalNights: 2,
+      cleaningFee: 22,
+      serviceFee: 17,
+      taxes: 13,
+      total: 316
+    },
+    availableDateRanges: [
+      { startDate: "2026-05-07", endDate: "2026-05-09" },
+      { startDate: "2026-05-21", endDate: "2026-05-24" }
+    ],
+    coordinates: { lat: 39.9507, lng: -75.1641 }
+  },
+  {
+    id: "listing-pittsburgh-4",
+    slug: "townhome-in-pittsburgh-river-view",
+    destinationSlug: "pittsburgh",
+    title: "Townhome in Pittsburgh",
+    propertyType: "Entire townhouse",
+    locationLabel: "Pittsburgh, Pennsylvania",
+    summary: "Spacious townhome with bright interiors and riverfront access for longer stays.",
+    searchKeywords: ["pittsburgh", "townhome", "river view", "spacious", "family"],
+    guestCount: 5,
+    bedroomCount: 2,
+    bedCount: 3,
+    bathCount: 2,
+    rating: 4.84,
+    reviewCount: 41,
+    isGuestFavorite: false,
+    isSuperhost: true,
+    isWishlistedDefault: false,
+    photos: [
+      {
+        id: "listing-pittsburgh-4-photo-1",
+        url: "/images/listings/pittsburgh-home-3b.jpg",
+        alt: "Pittsburgh townhome exterior on a hillside with a pitched roof.",
+        caption: "Townhome exterior"
+      },
+      {
+        id: "listing-pittsburgh-4-photo-2",
+        url: "/images/listings/pittsburgh-home-3b.jpg",
+        alt: "Secondary view of a Pittsburgh townhome interior.",
+        caption: "Secondary interior"
+      }
+    ],
+    badges: [{ label: "Superhost", tone: "accent" }],
+    hostId: "host-scott",
+    amenityIds: ["wifi", "kitchen", "washer", "parking", "tv"],
+    price: {
+      nightlyRate: 152,
+      totalNights: 2,
+      cleaningFee: 30,
+      serviceFee: 24,
+      taxes: 14,
+      total: 372
+    },
+    availableDateRanges: [
+      { startDate: "2026-05-11", endDate: "2026-05-13" },
+      { startDate: "2026-05-25", endDate: "2026-05-28" }
+    ],
+    coordinates: { lat: 40.4463, lng: -79.9861 }
+  },
+  {
+    id: "listing-miami-4",
+    slug: "villa-in-miami-biscayne-breeze",
+    destinationSlug: "miami",
+    title: "Villa in Miami",
+    propertyType: "Entire villa",
+    locationLabel: "Miami, Florida",
+    summary: "Waterfront-style villa with breezy interiors and a large social living area.",
+    searchKeywords: ["miami", "villa", "waterfront", "biscayne", "breeze"],
+    guestCount: 4,
+    bedroomCount: 2,
+    bedCount: 2,
+    bathCount: 2,
+    rating: 4.9,
+    reviewCount: 58,
+    isGuestFavorite: true,
+    isSuperhost: false,
+    isWishlistedDefault: false,
+    photos: [
+      {
+        id: "listing-miami-4-photo-1",
+        url: "/images/listings/miami-apartment-2b.jpg",
+        alt: "Modern Miami home exterior with bright sky and landscaped yard.",
+        caption: "Exterior view"
+      },
+      {
+        id: "listing-miami-4-photo-2",
+        url: "/images/listings/miami-apartment-2.jpg",
+        alt: "Miami villa facade near calm blue waterfront.",
+        caption: "Waterfront facade"
+      }
+    ],
+    badges: [{ label: "Guest favorite", tone: "neutral" }],
+    hostId: "host-maya",
+    amenityIds: ["wifi", "kitchen", "pool", "air-conditioning", "parking"],
+    price: {
+      nightlyRate: 184,
+      totalNights: 2,
+      cleaningFee: 32,
+      serviceFee: 26,
+      taxes: 19,
+      total: 445
+    },
+    availableDateRanges: [
+      { startDate: "2026-05-15", endDate: "2026-05-17" },
+      { startDate: "2026-05-29", endDate: "2026-06-01" }
+    ],
+    coordinates: { lat: 25.7892, lng: -80.1581 }
+  },
+  {
+    id: "listing-philadelphia-4",
+    slug: "townhouse-in-philadelphia-old-city",
+    destinationSlug: "philadelphia",
+    title: "Townhouse in Philadelphia",
+    propertyType: "Entire townhouse",
+    locationLabel: "Old City, Philadelphia",
+    summary: "Classic rowhome-style stay with updated finishes and a central neighborhood feel.",
+    searchKeywords: ["philadelphia", "old city", "townhouse", "rowhome", "classic"],
+    guestCount: 4,
+    bedroomCount: 2,
+    bedCount: 2,
+    bathCount: 2,
+    rating: 4.87,
+    reviewCount: 49,
+    isGuestFavorite: false,
+    isSuperhost: true,
+    isWishlistedDefault: false,
+    photos: [
+      {
+        id: "listing-philadelphia-4-photo-1",
+        url: "/images/listings/philadelphia-suite-1b.jpg",
+        alt: "Philadelphia townhouse block with warm neutral facades.",
+        caption: "Townhouse exterior"
+      },
+      {
+        id: "listing-philadelphia-4-photo-2",
+        url: "/images/listings/philadelphia-suite-1.jpg",
+        alt: "Historic Philadelphia row home facades at golden hour.",
+        caption: "Historic street view"
+      }
+    ],
+    badges: [{ label: "Superhost", tone: "accent" }],
+    hostId: "host-jordan",
+    amenityIds: ["wifi", "kitchen", "workspace", "self-check-in"],
+    price: {
+      nightlyRate: 146,
+      totalNights: 2,
+      cleaningFee: 24,
+      serviceFee: 22,
+      taxes: 12,
+      total: 350
+    },
+    availableDateRanges: [
+      { startDate: "2026-05-13", endDate: "2026-05-15" },
+      { startDate: "2026-05-27", endDate: "2026-05-30" }
+    ],
+    coordinates: { lat: 39.9527, lng: -75.1456 }
+  },
+  {
+    id: "listing-pittsburgh-5",
+    slug: "loft-home-in-pittsburgh-strip-district",
+    destinationSlug: "pittsburgh",
+    title: "Loft home in Pittsburgh",
+    propertyType: "Entire loft",
+    locationLabel: "Strip District, Pittsburgh",
+    summary: "Open loft layout with modern finishes and quick access to local markets.",
+    searchKeywords: ["pittsburgh", "loft", "strip district", "modern", "open"],
+    guestCount: 3,
+    bedroomCount: 1,
+    bedCount: 2,
+    bathCount: 1,
+    rating: 4.79,
+    reviewCount: 37,
+    isGuestFavorite: true,
+    isSuperhost: false,
+    isWishlistedDefault: false,
+    photos: [
+      {
+        id: "listing-pittsburgh-5-photo-1",
+        url: "/images/listings/pittsburgh-room-2b.jpg",
+        alt: "Pittsburgh loft-style home exterior with a sloped roofline.",
+        caption: "Contemporary exterior"
+      },
+      {
+        id: "listing-pittsburgh-5-photo-2",
+        url: "/images/listings/pittsburgh-room-2.jpg",
+        alt: "Pittsburgh residential street with warm-toned home facades.",
+        caption: "Neighborhood homes"
+      }
+    ],
+    badges: [{ label: "Guest favorite", tone: "neutral" }],
+    hostId: "host-scott",
+    amenityIds: ["wifi", "kitchen", "tv", "air-conditioning"],
+    price: {
+      nightlyRate: 124,
+      totalNights: 2,
+      cleaningFee: 20,
+      serviceFee: 15,
+      taxes: 9,
+      total: 292
+    },
+    availableDateRanges: [
+      { startDate: "2026-05-16", endDate: "2026-05-18" },
+      { startDate: "2026-05-30", endDate: "2026-06-02" }
+    ],
+    coordinates: { lat: 40.4543, lng: -79.9856 }
   }
 ];

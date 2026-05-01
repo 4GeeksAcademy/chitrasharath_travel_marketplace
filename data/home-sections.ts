@@ -7,7 +7,9 @@ export const homeSections: HomeSection[] = [
     destinationSlug: "miami",
     listingIds: [
       "listing-miami-1",
-      "listing-miami-2"
+      "listing-miami-2",
+      "listing-miami-3",
+      "listing-miami-4"
     ],
   },
   {
@@ -17,7 +19,9 @@ export const homeSections: HomeSection[] = [
     destinationSlug: "miami",
     listingIds: [
       "listing-miami-2",
-      "listing-miami-1"
+      "listing-miami-1",
+      "listing-miami-3",
+      "listing-miami-4"
     ],
   },
   {
@@ -26,7 +30,9 @@ export const homeSections: HomeSection[] = [
     destinationSlug: "philadelphia",
     listingIds: [
       "listing-philadelphia-1",
-      "listing-philadelphia-2"
+      "listing-philadelphia-2",
+      "listing-philadelphia-3",
+      "listing-philadelphia-4"
     ],
   },
   {
@@ -36,7 +42,9 @@ export const homeSections: HomeSection[] = [
     listingIds: [
       "listing-pittsburgh-1",
       "listing-pittsburgh-2",
-      "listing-pittsburgh-3"
+      "listing-pittsburgh-3",
+      "listing-pittsburgh-4",
+      "listing-pittsburgh-5"
     ],
   },
 ];
