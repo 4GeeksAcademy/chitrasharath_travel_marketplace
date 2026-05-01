@@ -22,7 +22,7 @@ export const PrimaryCategoryTabs = ({ items }: PrimaryCategoryTabsProps) => (
         type="button"
         className={`relative inline-flex min-w-0 w-full flex-col items-center justify-center gap-1 rounded-2xl border px-1.5 py-2 text-[10px] font-semibold leading-tight transition ${
           item.isActive
-            ? "border-transparent bg-[var(--accent-soft)] text-[var(--accent-hover)]"
+            ? "border-red-500 bg-[var(--accent-soft)] text-[var(--accent-hover)]"
             : "border-[var(--border-soft)] bg-white text-[var(--text-secondary)]"
         }`}
       >

@@ -49,7 +49,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
   const backHref = from === "home" ? "/" : (listing.destinationSlug ? `/catalog?destination=${encodeURIComponent(listing.destinationSlug)}` : "/");
   if (loading) return <main className="mx-auto max-w-5xl px-4 pt-4 pb-20"><LoadingBlock /></main>;
   return (
-    <main className="mx-auto max-w-5xl space-y-6 px-4 pt-4 pb-20 md:px-6">
+    <main className="mx-auto w-full max-w-5xl space-y-6 overflow-x-hidden px-4 pt-4 pb-20 md:px-6">
       <HeroMediaHeader
         photos={listing.photos}
         currentPhotoIndex={photoIndex}
@@ -59,7 +59,7 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
         backHref={backHref}
       />
       <div className="grid gap-6 md:grid-cols-[1fr_320px] md:items-start">
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <ListingIdentityBlock listing={listing} hostName={host.name} />
           <TrustHighlights items={trustItems} />
           <DescriptionSection body={listing.summary} />

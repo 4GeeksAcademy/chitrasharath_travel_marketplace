@@ -27,12 +27,24 @@ export const HeroMediaHeader = ({ photos, currentPhotoIndex, onPrevious, onNext,
       <CircleIconButton label="Share"><ShareIcon className="h-4 w-4" /></CircleIconButton>
       <CircleIconButton label="Favorite"><HeartIcon className="h-4 w-4" /></CircleIconButton>
     </div>
-    <div className="absolute right-3 bottom-3 flex gap-2">
-      <button type="button" onClick={onPrevious} className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold">Prev</button>
-      <button type="button" onClick={onNext} className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold">Next</button>
-    </div>
+    <button
+      type="button"
+      onClick={onPrevious}
+      aria-label="Previous image"
+      className="absolute top-1/2 left-3 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-white/90 text-[var(--text-primary)] shadow-[var(--shadow-chip)] transition hover:-translate-y-[52%]"
+    >
+      <BackIcon className="h-4 w-4" />
+    </button>
+    <button
+      type="button"
+      onClick={onNext}
+      aria-label="Next image"
+      className="absolute top-1/2 right-3 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-white/90 text-[var(--text-primary)] shadow-[var(--shadow-chip)] transition hover:-translate-y-[52%]"
+    >
+      <BackIcon className="h-4 w-4 rotate-180" />
+    </button>
     {/* Thumbnails Gallery */}
-    <div className="mt-2 flex justify-center gap-2">
+    <div className="mt-2 flex gap-2 overflow-x-auto pb-1 md:justify-center">
       {photos.map((photo, idx) => (
         <button
           key={photo.id}

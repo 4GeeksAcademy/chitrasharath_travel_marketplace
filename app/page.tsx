@@ -50,7 +50,7 @@ export default function HomePage() {
             />
           </div>
         </div>
-        {query ? <button type="button" onClick={goToCatalog} className="w-fit rounded-full bg-[var(--accent-primary)] px-5 py-2 text-sm font-semibold text-white hover:bg-[var(--accent-hover)]">Search destination</button> : null}
+        {query ? <button type="button" onClick={goToCatalog} className="w-fit rounded-full bg-[var(--accent-primary)] px-5 py-2 text-sm font-semibold text-white hover:bg-[var(--accent-hover)]">Search</button> : null}
         <PrimaryCategoryTabs items={categoryItems} />
         <FeeBanner text="Prices include all fees" />
         {loading ? <LoadingBlock /> : null}
