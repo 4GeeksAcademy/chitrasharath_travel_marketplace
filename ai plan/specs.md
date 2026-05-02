@@ -209,7 +209,9 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 ### Catalog Page Visual Design
 
 - Keep the top of the page anchored by a shallow map area or map preview strip.
-- Use a floating fee banner directly below the map region.
+- Add a compact results header row below the map that shows filtered property count and pricing notice.
+- On mobile, center both the results count and fee banner.
+- On desktop, left-align the results count and right-align the fee banner.
 - Property cards should run full width in a single-column stack on mobile, with large imagery and compact metadata blocks.
 - Use consistent vertical rhythm between cards to make long scrolling feel calm rather than dense.
 - Keep the white surface and neutral text palette dominant so the listing photography remains the focal point.
@@ -236,7 +238,8 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 
 - Increase outer padding and card widths.
 - Keep a comfortable reading measure for listing metadata.
-- At larger desktop widths, the map can become sticky alongside the listing results, but the design should still work as a single-column layout starting at `768px`.
+- Keep the map as a top section while maintaining a single-column results flow.
+- Render footer links at the bottom of the page in desktop viewport.
 
 ### Room Detail Page at 768px and Up
 
@@ -267,10 +270,12 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 - Destination-driven listing results.
 - A top visual header area that can support map context.
 - Fee banner or promotional notice near the top of results.
+- A filtered-results count label near the top of results.
 - A vertical feed of property cards.
-- Reuse the property or listing card component from the home page. If layout changes are needed, handle them through variants or props rather than a separate unrelated component.
+- Reuse the shared listing-card foundation for catalog cards.
 - Favorite or wishlist control on listing cards.
 - Include a back button at the top of the page.
+- Show footer link groups at the bottom in desktop viewport only.
 - Bottom mobile navigation.
 
 ### Room Detail Page
@@ -306,24 +311,25 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 ### Catalog Page Composition
 
 1. `MapHeader`
-2. `FeeBanner`
+2. Results summary row (filtered property count + `FeeBanner`)
 3. `ListingFeed`
-4. `BottomTabBar`
+4. `FooterLinkGroups` (desktop only)
+5. `BottomTabBar`
 
 ### Room Detail Page Composition
 
 1. `HeroMediaHeader`
 2. `ListingIdentityBlock`
-3. `BookingSummary`
-4. `TrustHighlights`
-5. `DescriptionSection`
-6. `AmenitiesSection`
-7. `LocationSection`
-8. `DateSelectionSection`
-9. `ReviewPlaceholderSection` or review summary
-10. `HostSection`
-11. `PolicySection`
-12. `NearbyListingsRail`
+3. `TrustHighlights`
+4. `DescriptionSection`
+5. `AmenitiesSection`
+6. `LocationSection`
+7. `DateSelectionSection`
+8. `ReviewPlaceholderSection` or review summary
+9. `HostSection`
+10. `PolicySection`
+11. `NearbyListingsRail`
+12. `BookingSummary` (desktop side column, mobile follows detail sections)
 13. `DestinationLinksSection` or supporting area links
 14. `FooterLinkGroups`
 
@@ -334,10 +340,13 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 - Purpose: primary destination entry point on the home page
 - Required properties:
   - `placeholder`
-  - `leadingIcon`
   - `value`
   - `isFocused`
   - `onChange`
+  - `onFocus`
+  - `onBlur`
+  - `onEnter` (optional)
+  - `leftSlot` (optional)
 - Rules:
   - Must render as a full-width pill input at the top of the home page
   - Must use the placeholder `Enter destination`
@@ -369,6 +378,7 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 - Rules:
   - Header should align title on the left
   - On desktop, include inline left and right chevron buttons that scroll the rail smoothly
+  - Each chevron should only be visible when scrolling in that direction is possible
   - Content should scroll horizontally on mobile
   - This pattern should be reused for destination and theme-based discovery groups
 
@@ -376,22 +386,15 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 
 - Purpose: compact property card used inside horizontal rails
 - Required properties:
-  - `image`
-  - `badgeLabel`
-  - `isWishlisted`
-  - `title`
-  - `priceText`
-  - `rating`
+  - `listing`
+  - `source` (optional)
 - Rules:
-  - Media appears first
-  - Text metadata appears below the image
-  - Wishlist or favorite control sits on the image overlay
+  - Should reuse the shared `ListingCard` in compact mode
 
 ### `FeeBanner`
 
 - Purpose: promotional or informational pricing notice
 - Required properties:
-  - `icon`
   - `text`
 - Rules:
   - Must support the message `Prices include all fees`
@@ -401,9 +404,9 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 
 - Purpose: top visual area of the catalog page
 - Required properties:
-  - `mapImage`
   - `locationLabel`
-  - `overlayControls`
+  - `points`
+  - `fullWidth` (optional)
 - Rules:
   - Should support a shallow map region rather than a full-screen map
   - Must visually anchor the catalog page before the listing feed begins
@@ -422,25 +425,15 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 
 - Purpose: full-width listing card used in the catalog page
 - Required properties:
-  - `heroImage`
-  - `badgeLabel`
-  - `isWishlisted`
-  - `title`
-  - `locationOrSummary`
-  - `dateRange`
-  - `priceTotal`
-  - `rating`
+  - `listing`
 - Rules:
-  - Media appears at the top of the card
-  - Metadata stacks below the image
-  - Favorite control overlays the image
+  - Should reuse the shared `ListingCard` with catalog source context
 
 ### `BottomTabBar`
 
 - Purpose: primary mobile navigation
 - Required properties:
-  - `items`
-  - `isActive`
+  - None (uses internal static nav items)
 - Rules:
   - Must support at least `Explore`, `Wishlists`, and `Log in`
   - Should remain fixed at the bottom on mobile discovery screens
@@ -451,9 +444,10 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 - Required properties:
   - `photos`
   - `currentPhotoIndex`
-  - `actions`
   - `onPrevious`
   - `onNext`
+  - `onSelectPhoto`
+  - `backHref` (optional)
 - Rules:
   - Must support floating circular actions for `back`, `share`, and `favorite`
   - Must appear before all room detail content
@@ -465,68 +459,52 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 
 - Purpose: top metadata block for a single property
 - Required properties:
-  - `title`
-  - `propertyType`
-  - `location`
-  - `guestCount`
-  - `bedroomCount`
-  - `bedCount`
-  - `bathCount`
+  - `listing`
   - `hostName`
-  - `badges`
 
 ### `BookingSummary`
 
 - Purpose: pricing and reservation call-to-action block
 - Required properties:
-  - `nightlyRate`
-  - `selectedNights`
-  - `fees`
-  - `calculatedTotal`
-  - `cancellationCopy`
-  - `ctaLabel`
-  - `supportCopy`
+  - `listing`
+  - `selectedNights` (optional)
 - Rules:
   - Must include a primary reservation action
   - Must clearly separate pricing information from long-form descriptive content
   - Must recalculate total when selected nights change
+  - Must show total available nights from listing availability ranges
+  - Must label selected nights explicitly as `selected`
 
 ### `TrustHighlights`
 
 - Purpose: concise host or property confidence signals
 - Required properties:
   - `items`
-  - `icon`
-  - `title`
-  - `description`
 
 ### `DescriptionSection`
 
 - Purpose: long-form listing description
 - Required properties:
   - `body`
-  - `expandLabel`
 - Rules:
   - Must support collapsed and expanded content states
+  - `Show more`/`Show less` controls should appear only when body text exceeds preview length
 
 ### `AmenitiesSection`
 
 - Purpose: amenity overview
 - Required properties:
-  - `title`
   - `items`
-  - `ctaLabel`
 - Rules:
   - Must support a short visible list and a secondary action to reveal more amenities
+  - `Show all amenities` control should appear only when amenities exceed the collapsed count
 
 ### `LocationSection`
 
 - Purpose: location context for a listing
 - Required properties:
-  - `title`
   - `placeLabel`
-  - `mapImage`
-  - `disclosure`
+  - `points`
 - Rules:
   - Must support a map preview
   - Must support exact-location disclosure text
@@ -536,50 +514,40 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 
 - Purpose: stay date and availability display
 - Required properties:
-  - `title`
-  - `startDate`
-  - `endDate`
+  - `range`
+  - `ranges` (optional)
   - `onNightsChange`
-  - `minDate`
-  - `maxDate`
 - Rules:
+  - Must support one or more availability windows
+  - If multiple windows exist, must provide a window selector before date inputs
   - Must provide interactive start and end date inputs
+  - Start and end date limits must stay within the active availability window
   - End date must be at least one day after start date
   - Must emit selected night count to pricing components
+  - Must display total available nights derived from listing availability ranges
 
 ### `ReviewPlaceholderSection`
 
 - Purpose: no-review or review-summary state
 - Required properties:
-  - `title`
-  - `body`
+  - None
 
 ### `HostSection`
 
 - Purpose: host profile and contact summary
 - Required properties:
-  - `avatar`
-  - `name`
-  - `stats`
-  - `traits`
-  - `responseRate`
-  - `responseTime`
-  - `ctaLabel`
+  - `host`
 
 ### `PolicySection`
 
 - Purpose: operational rules and booking policies
 - Required properties:
-  - `items`
-  - `title`
-  - `description`
-  - `icon`
+  - None
 
 ### `NearbyListingsRail`
 
 - Purpose: related properties at the end of the room detail page
 - Required properties:
-  - `title`
   - `items`
 
 ### `DestinationLinksSection`
@@ -587,18 +555,14 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 - Purpose: supporting discovery links for destinations or themes
 - Required properties:
   - `title`
-  - `tabs`
-  - `links`
+  - `groups`
 
 ### `FooterLinkGroups`
 
 - Purpose: shared footer navigation and legal information
 - Required properties:
   - `groups`
-  - `locale`
-  - `currency`
-  - `socialLinks`
-  - `legalLinks`
+  - `meta`
 
 ## Reusable UI Components
 
@@ -626,7 +590,7 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 - Wishlist or favorite controls should be overlaid on listing imagery rather than placed in the text area.
 - Section headers should consistently use left-aligned titles with right-aligned compact actions where applicable.
 - The bottom tab bar should be treated as fixed mobile navigation rather than standard page content.
-- Footer link groups should be treated as a shared terminal section after the main content ends.
+- Footer link groups should be treated as a terminal section where rendered (home and room detail on all viewports, catalog on desktop).
 - Desktop layouts at `768px` and above should preserve the same content order while increasing width, spacing, and column opportunities.
 - Any searchable listing result grids should be single-column on mobile and expand into multiple columns on desktop.
 

@@ -1,11 +1,12 @@
 "use client";
 
-import { nightsInRange } from "@/lib/format";
+import { nightsInRange, totalAvailableNights } from "@/lib/format";
 import type { AvailabilityRange } from "@/types/listing";
 import { useEffect, useMemo, useState } from "react";
 
 interface DateSelectionSectionProps {
   range: AvailabilityRange;
+  ranges?: AvailabilityRange[];
   onNightsChange?: (nights: number) => void;
 }
 
@@ -17,15 +18,37 @@ const addDays = (value: string, days: number) => {
   return date.toISOString().slice(0, 10);
 };
 
-export const DateSelectionSection = ({ range, onNightsChange }: DateSelectionSectionProps) => {
-  const [startDate, setStartDate] = useState(range.startDate);
-  const [endDate, setEndDate] = useState(range.endDate);
-  const rangeNights = useMemo(() => nightsInRange(range), [range]);
+const shortDate = (value: string) =>
+  toUtcDate(value).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+
+export const DateSelectionSection = ({ range, ranges, onNightsChange }: DateSelectionSectionProps) => {
+  const availableRanges = useMemo(() => {
+    if (ranges && ranges.length > 0) return ranges;
+    return [range];
+  }, [range, ranges]);
+  const [activeRangeIndex, setActiveRangeIndex] = useState(0);
+  const activeRange = availableRanges[activeRangeIndex] ?? availableRanges[0];
+  const [startDate, setStartDate] = useState(activeRange.startDate);
+  const [endDate, setEndDate] = useState(activeRange.endDate);
+  const availableNights = useMemo(() => {
+    if (ranges && ranges.length > 0) return totalAvailableNights(ranges);
+    return nightsInRange(range);
+  }, [range, ranges]);
 
   useEffect(() => {
-    setStartDate(range.startDate);
-    setEndDate(range.endDate);
-  }, [range.startDate, range.endDate]);
+    setActiveRangeIndex(0);
+    setStartDate(availableRanges[0].startDate);
+    setEndDate(availableRanges[0].endDate);
+  }, [availableRanges]);
+
+  useEffect(() => {
+    setStartDate(activeRange.startDate);
+    setEndDate(activeRange.endDate);
+  }, [activeRange.startDate, activeRange.endDate]);
 
   const nights = useMemo(() => {
     const start = toUtcDate(startDate);
@@ -39,25 +62,51 @@ export const DateSelectionSection = ({ range, onNightsChange }: DateSelectionSec
   }, [nights, onNightsChange]);
 
   const minEndDate = useMemo(() => addDays(startDate, 1), [startDate]);
+  const maxStartDate = useMemo(() => addDays(activeRange.endDate, -1), [activeRange.endDate]);
 
   return (
     <section className="space-y-3 border-b border-[var(--border-soft)] pb-6">
       <h2 className="text-lg font-bold text-[var(--text-primary)]">Availability</h2>
-      <p className="text-sm text-[var(--text-secondary)]">{range.startDate} to {range.endDate}</p>
-      <p className="text-xs text-[var(--text-muted)]">{rangeNights} night{rangeNights === 1 ? "" : "s"} available in this date range</p>
+      <p className="text-sm text-[var(--text-secondary)]">{activeRange.startDate} to {activeRange.endDate}</p>
+      <p className="text-xs text-[var(--text-muted)]">{availableNights} night{availableNights === 1 ? "" : "s"} available</p>
+      {availableRanges.length > 1 ? (
+        <label className="space-y-1">
+          <span className="text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">Available windows</span>
+          <select
+            value={activeRangeIndex}
+            onChange={(event) => setActiveRangeIndex(Number(event.target.value))}
+            className="h-10 w-full rounded-lg border border-[var(--border-soft)] bg-white px-3 text-sm text-[var(--text-primary)]"
+          >
+            {availableRanges.map((windowRange, index) => {
+              const windowNights = nightsInRange(windowRange);
+              return (
+                <option key={`${windowRange.startDate}-${windowRange.endDate}`} value={index}>
+                  {shortDate(windowRange.startDate)} - {shortDate(windowRange.endDate)} ({windowNights}n)
+                </option>
+              );
+            })}
+          </select>
+        </label>
+      ) : null}
       <div className="grid gap-3 rounded-xl border border-[var(--border-soft)] bg-white p-3 sm:grid-cols-2">
         <label className="space-y-1">
           <span className="text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">Start date</span>
           <input
             type="date"
             value={startDate}
-            min={range.startDate}
-            max={range.endDate}
+            min={activeRange.startDate}
+            max={maxStartDate}
             onChange={(event) => {
               const nextStart = event.target.value;
               setStartDate(nextStart);
               const nextMinEnd = addDays(nextStart, 1);
-              if (endDate < nextMinEnd) setEndDate(nextMinEnd);
+              if (endDate < nextMinEnd) {
+                setEndDate(nextMinEnd);
+                return;
+              }
+              if (endDate > activeRange.endDate) {
+                setEndDate(activeRange.endDate);
+              }
             }}
             className="h-10 w-full rounded-lg border border-[var(--border-soft)] px-3 text-sm text-[var(--text-primary)]"
           />
@@ -68,7 +117,7 @@ export const DateSelectionSection = ({ range, onNightsChange }: DateSelectionSec
             type="date"
             value={endDate}
             min={minEndDate}
-            max={range.endDate}
+            max={activeRange.endDate}
             onChange={(event) => setEndDate(event.target.value)}
             className="h-10 w-full rounded-lg border border-[var(--border-soft)] px-3 text-sm text-[var(--text-primary)]"
           />

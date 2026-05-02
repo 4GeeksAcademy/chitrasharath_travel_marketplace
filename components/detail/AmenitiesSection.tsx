@@ -9,7 +9,9 @@ interface AmenitiesSectionProps {
 
 export const AmenitiesSection = ({ items }: AmenitiesSectionProps) => {
   const [showAll, setShowAll] = useState(false);
-  const visible = showAll ? items : items.slice(0, 4);
+  const collapsedCount = 4;
+  const canToggle = items.length > collapsedCount;
+  const visible = showAll || !canToggle ? items : items.slice(0, collapsedCount);
   return (
     <section className="space-y-3 border-b border-[var(--border-soft)] pb-6">
       <h2 className="text-lg font-bold text-[var(--text-primary)]">Amenities</h2>
@@ -18,9 +20,11 @@ export const AmenitiesSection = ({ items }: AmenitiesSectionProps) => {
           <li key={item.id}>• {item.label}</li>
         ))}
       </ul>
-      <button type="button" onClick={() => setShowAll((state) => !state)} className="text-sm font-semibold text-[var(--accent-hover)]">
-        {showAll ? "Show fewer amenities" : "Show all amenities"}
-      </button>
+      {canToggle ? (
+        <button type="button" onClick={() => setShowAll((state) => !state)} className="text-sm font-semibold text-[var(--accent-hover)]">
+          {showAll ? "Show fewer amenities" : "Show all amenities"}
+        </button>
+      ) : null}
     </section>
   );
 };

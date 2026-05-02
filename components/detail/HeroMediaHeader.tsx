@@ -1,8 +1,8 @@
 import { CircleIconButton } from "@/components/shared/CircleIconButton";
+import { HistoryBackButton } from "@/components/shared/HistoryBackButton";
 import { BackIcon, HeartIcon, ShareIcon } from "@/components/shared/Icons";
 import type { ListingPhoto } from "@/types/listing";
 import Image from "next/image";
-import Link from "next/link";
 
 interface HeroMediaHeaderProps {
   photos: ListingPhoto[];
@@ -17,13 +17,13 @@ export const HeroMediaHeader = ({ photos, currentPhotoIndex, onPrevious, onNext,
   <header className="relative">
     <Image src={photos[currentPhotoIndex].url} alt={photos[currentPhotoIndex].alt} width={1200} height={700} className="h-72 w-full rounded-[22px] object-cover md:h-96" unoptimized />
     <div className="absolute top-3 left-3 flex gap-2">
-      <Link
-        href={backHref}
-        aria-label="Back"
+      <HistoryBackButton
+        fallbackHref={backHref}
+        ariaLabel="Back"
         className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-soft)] bg-white/90 text-[var(--text-primary)] shadow-[var(--shadow-chip)] transition hover:-translate-y-0.5"
       >
         <BackIcon className="h-4 w-4" />
-      </Link>
+      </HistoryBackButton>
       <CircleIconButton label="Share"><ShareIcon className="h-4 w-4" /></CircleIconButton>
       <CircleIconButton label="Favorite"><HeartIcon className="h-4 w-4" /></CircleIconButton>
     </div>

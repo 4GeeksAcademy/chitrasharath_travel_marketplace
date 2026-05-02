@@ -58,16 +58,16 @@ export default function RoomPage({ params }: { params: Promise<{ id: string }> }
           <DescriptionSection body={listing.summary} />
           <AmenitiesSection items={listingAmenities} />
           <LocationSection placeLabel={listing.locationLabel} points={locationPoints} />
-          <DateSelectionSection range={listing.availableDateRanges[0]} onNightsChange={setSelectedNights} />
+          <DateSelectionSection range={listing.availableDateRanges[0]} ranges={listing.availableDateRanges} onNightsChange={setSelectedNights} />
           <ReviewPlaceholderSection />
           <HostSection host={host} />
           <PolicySection />
           <NearbyListingsRail items={nearby} />
-          <DestinationLinksSection title="Explore nearby neighborhoods" groups={inspirationGroups} />
-          <FooterLinkGroups groups={footerLinkGroups} meta={footerMeta} />
         </div>
         <BookingSummary listing={listing} selectedNights={selectedNights} />
       </div>
+      <DestinationLinksSection title="Explore nearby neighborhoods" groups={inspirationGroups} />
+      <FooterLinkGroups groups={footerLinkGroups} meta={footerMeta} />
     </main>
   );
 }

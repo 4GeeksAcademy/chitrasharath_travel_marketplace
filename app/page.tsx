@@ -52,7 +52,9 @@ export default function HomePage() {
         </div>
         {query ? <button type="button" onClick={goToCatalog} className="w-fit rounded-full bg-[var(--accent-primary)] px-5 py-2 text-sm font-semibold text-white hover:bg-[var(--accent-hover)]">Search</button> : null}
         <PrimaryCategoryTabs items={categoryItems} />
-        <FeeBanner text="Prices include all fees" />
+        <div className="flex justify-center md:justify-start">
+          <FeeBanner text="Prices include all fees" />
+        </div>
         {loading ? <LoadingBlock /> : null}
         {!loading && query ? <section className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">{filtered.map((item) => <ListingCard key={item.id} listing={item} source="home" />)}</section> : null}
         {!loading && !query ? sections.map((section) => <ListingRailSection key={section.title} title={section.title} subtitle={section.subtitle} items={section.items} source="home" />) : null}
