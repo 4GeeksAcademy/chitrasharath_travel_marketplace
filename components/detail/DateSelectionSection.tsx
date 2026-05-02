@@ -1,5 +1,6 @@
 "use client";
 
+import { nightsInRange } from "@/lib/format";
 import type { AvailabilityRange } from "@/types/listing";
 import { useEffect, useMemo, useState } from "react";
 
@@ -19,6 +20,7 @@ const addDays = (value: string, days: number) => {
 export const DateSelectionSection = ({ range, onNightsChange }: DateSelectionSectionProps) => {
   const [startDate, setStartDate] = useState(range.startDate);
   const [endDate, setEndDate] = useState(range.endDate);
+  const rangeNights = useMemo(() => nightsInRange(range), [range]);
 
   useEffect(() => {
     setStartDate(range.startDate);
@@ -42,6 +44,7 @@ export const DateSelectionSection = ({ range, onNightsChange }: DateSelectionSec
     <section className="space-y-3 border-b border-[var(--border-soft)] pb-6">
       <h2 className="text-lg font-bold text-[var(--text-primary)]">Availability</h2>
       <p className="text-sm text-[var(--text-secondary)]">{range.startDate} to {range.endDate}</p>
+      <p className="text-xs text-[var(--text-muted)]">{rangeNights} night{rangeNights === 1 ? "" : "s"} available in this date range</p>
       <div className="grid gap-3 rounded-xl border border-[var(--border-soft)] bg-white p-3 sm:grid-cols-2">
         <label className="space-y-1">
           <span className="text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">Start date</span>

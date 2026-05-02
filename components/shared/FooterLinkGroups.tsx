@@ -29,5 +29,6 @@ export const FooterLinkGroups = ({ groups, meta }: FooterLinkGroupsProps) => (
         <span key={item}>{item}</span>
       ))}
     </div>
+    <div className="mt-3 text-left text-xs text-[var(--text-muted)] md:text-right">&copy; {new Date().getFullYear()} Stayvoy. All rights reserved.</div>
   </footer>
 );

@@ -1,4 +1,6 @@
+import { resolveDestinationSlug } from "@/lib/selectors";
 import type { InspirationGroup } from "@/types/search";
+import Link from "next/link";
 
 interface DestinationLinksSectionProps {
   title: string;
@@ -17,12 +19,17 @@ export const DestinationLinksSection = ({ title, groups }: DestinationLinksSecti
         ))}
       </div>
       <div className="mt-4 grid gap-3 md:grid-cols-3">
-        {groups.flatMap((group) => group.links).map((link) => (
-          <a key={link.name} href="#" className="rounded-xl border border-[var(--border-soft)] p-3">
-            <p className="text-sm font-semibold text-[var(--text-primary)]">{link.name}</p>
-            <p className="text-xs text-[var(--text-muted)]">{link.subLabel}</p>
-          </a>
-        ))}
+        {groups.flatMap((group) => group.links).map((link) => {
+          const destinationSlug = resolveDestinationSlug(link.name);
+          const href = destinationSlug ? `/catalog?destination=${encodeURIComponent(destinationSlug)}` : "/catalog";
+
+          return (
+            <Link key={link.name} href={href} className="rounded-xl border border-[var(--border-soft)] p-3">
+              <p className="text-sm font-semibold text-[var(--text-primary)]">{link.name}</p>
+              <p className="text-xs text-[var(--text-muted)]">{link.subLabel}</p>
+            </Link>
+          );
+        })}
       </div>
     </div>
   </section>

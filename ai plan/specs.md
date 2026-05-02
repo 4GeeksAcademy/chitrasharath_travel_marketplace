@@ -298,11 +298,10 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 1. `DestinationSearchInput`
 2. `PrimaryCategoryTabs`
 3. `ListingRailSection` for popular homes
-4. `ListingRailSection` for featured hotels
-5. Additional `ListingRailSection` blocks for other destinations or themes
-6. `DestinationLinksSection`
-7. `FooterLinkGroups`
-8. `BottomTabBar`
+4. Additional `ListingRailSection` blocks for other destinations or themes
+5. `DestinationLinksSection`
+6. `FooterLinkGroups`
+7. `BottomTabBar`
 
 ### Catalog Page Composition
 
@@ -365,12 +364,13 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 - Required properties:
   - `title`
   - `subtitle`
-  - `trailingAction`
   - `items`
+  - `source`
 - Rules:
-  - Header should align title on the left and a compact action on the right
+  - Header should align title on the left
+  - On desktop, include inline left and right chevron buttons that scroll the rail smoothly
   - Content should scroll horizontally on mobile
-  - This pattern should be reused for popular homes, featured hotels, and similar content groups
+  - This pattern should be reused for destination and theme-based discovery groups
 
 ### `ListingCardCompact`
 
@@ -458,6 +458,8 @@ The design should feel like premium hospitality software: clean, calm, warm, and
   - Must support floating circular actions for `back`, `share`, and `favorite`
   - Must appear before all room detail content
   - Must support stepping through a listing photo array
+  - Must support over-image chevron controls for previous and next photo navigation
+  - Should support a thumbnail strip for direct photo selection
 
 ### `ListingIdentityBlock`
 
@@ -471,19 +473,23 @@ The design should feel like premium hospitality software: clean, calm, warm, and
   - `bedCount`
   - `bathCount`
   - `hostName`
+  - `badges`
 
 ### `BookingSummary`
 
 - Purpose: pricing and reservation call-to-action block
 - Required properties:
-  - `priceTotal`
-  - `stayLength`
+  - `nightlyRate`
+  - `selectedNights`
+  - `fees`
+  - `calculatedTotal`
   - `cancellationCopy`
   - `ctaLabel`
   - `supportCopy`
 - Rules:
   - Must include a primary reservation action
   - Must clearly separate pricing information from long-form descriptive content
+  - Must recalculate total when selected nights change
 
 ### `TrustHighlights`
 
@@ -524,16 +530,22 @@ The design should feel like premium hospitality software: clean, calm, warm, and
 - Rules:
   - Must support a map preview
   - Must support exact-location disclosure text
+  - On room detail, map should render a single marker for the currently viewed property
 
 ### `DateSelectionSection`
 
 - Purpose: stay date and availability display
 - Required properties:
   - `title`
-  - `selectedRange`
-  - `calendarMonth`
   - `startDate`
   - `endDate`
+  - `onNightsChange`
+  - `minDate`
+  - `maxDate`
+- Rules:
+  - Must provide interactive start and end date inputs
+  - End date must be at least one day after start date
+  - Must emit selected night count to pricing components
 
 ### `ReviewPlaceholderSection`
 
@@ -1393,8 +1405,43 @@ Use these links as the geographic reference for catalog map previews and room de
 - Clicking a listing card on the catalog page should navigate to `/rooms/[id]`.
 - All navigations should use the Next.js `<Link>` component.
 - Implement a back button on the catalog page using `<Link>` to return to the home page.
-- Implement a back button on the room detail page using `<Link>` to return to the catalog page.
+- Include a source query parameter when navigating to room detail (`from=home` or `from=catalog`).
+- Implement source-aware room-detail back behavior:
+  - If opened from home, back returns to `/`.
+  - If opened from catalog, back returns to `/catalog?destination=...` when available.
 - Navigation between the three pages should feel immediate and app-like.
+
+## Implementation Addendum (May 2026)
+
+The following behavior is implemented in code and should be treated as current expected functionality.
+
+### Home Page
+
+- Search input uses placeholder `Enter destination` and a compact `Search` button appears only when query has text.
+- Listing rails are generated from `homeSections` and currently do not include a `Featured hotels in Miami` section.
+- `PrimaryCategoryTabs` use icon-above-label layout, fit mobile `375px`, and remain mobile-sized but centered on desktop.
+- Active category tab uses a red outline.
+- Desktop listing rails include chevron left and chevron right controls for horizontal scrolling.
+
+### Catalog Page
+
+- Uses a responsive listing grid that matches home card sizing behavior.
+- Listing cards include status badges (for example `Superhost`, `Guest favorite`) when present.
+
+### Room Detail Page
+
+- Hero section uses over-image chevron controls and a selectable thumbnail strip.
+- Date section uses interactive start/end date pickers.
+- Booking summary recalculates total price based on selected nights.
+- Location map shows exactly one marker: the current listing.
+- Listing badges are displayed in the identity block.
+
+### Data and Assets
+
+- Listing dataset has been expanded beyond the initial sample set to support longer horizontal rails.
+- Listing and host imagery is local under `/public/images/listings`.
+- Non-photographic placeholder listing images were removed in favor of real home/apartment photos.
+- Listing lead images are unique and image content is not repeated across cities.
 
 ## Component Implementation Requirements
 
